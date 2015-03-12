@@ -49,8 +49,8 @@ ENDIF(CMAKE_COMPILER_IS_GNUCXX)
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 # my own includes/libs
-include_directories(~/localW/include)######################################
-link_directories(~/localW/lib)######################################
+include_directories(~/local/include)######################################
+link_directories(~/local/lib)######################################
 
 # MPI
 FIND_PACKAGE(MPI REQUIRED)
@@ -62,7 +62,7 @@ SET(CMAKE_CXX_COMPILER_ARG1 mpicxx)
 # search for boost library
 ##find_package(Boost 1.46.1 COMPONENTS serialization mpi thread)
 ##IF(NOT ${Boost_FOUND})
-	SET(BOOST_ROOT ~/localW) # default ##########################
+	SET(BOOST_ROOT ~/local) # default ##########################
 	SET(Boost_NO_SYSTEM_PATHS TRUE) # needed with cmake on lenny to prevent it grabbing an old system version...
 	find_package(Boost COMPONENTS serialization mpi thread program_options regex filesystem chrono REQUIRED)
 ##ENDIF(NOT ${Boost_FOUND})
