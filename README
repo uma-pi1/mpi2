@@ -1,0 +1,3 @@
+To run an MPI program on a cluster:
+- Type "mpirun --hosts <comma-separated hostlist> <executable> <args>"
+- Example: mpirun --hosts localhost,localhost ./build/examples/mpi2/task

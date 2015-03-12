@@ -1,0 +1,127 @@
+\documentclass[t,fleqn]{beamer}
+\usetheme{Boadilla}
+\beamertemplatenavigationsymbolsempty
+
+\usepackage{color}
+\definecolor{sh_comment}{rgb}{0.12, 0.38, 0.18 } %adjusted, in Eclipse: {0.25, 0.42, 0.30 } = #3F6A4D
+\definecolor{sh_keyword}{rgb}{0.37, 0.08, 0.25}  % #5F1441
+\definecolor{sh_string}{rgb}{0.06, 0.10, 0.98} % #101AF9
+
+\usepackage{listings}
+\lstset{
+  showspaces=false,showtabs=false,tabsize=2,
+  breaklines=true,
+  language=C++,
+  basicstyle=\footnotesize\ttfamily,
+  numbers=left, 
+  numberstyle=\tiny, 
+  xleftmargin=2em,
+  stringstyle=\color{sh_string},
+  keywordstyle = \color{sh_keyword}\bfseries,
+  commentstyle=\color{sh_comment}\itshape
+}
+
+\title{Introduction to mpi$^2$}
+\author{Rainer Gemulla}
+\date{\today}
+
+
+\begin{document}
+
+\setbeamertemplate{footline}{}
+\frame{\titlepage}
+\setbeamertemplate{footline}[frame number]
+
+\begin{frame}[fragile]\frametitle{Message Passing Interface (MPI)}  
+  \begin{itemize}
+  \item A standardized API for interprocess communication
+  \item Each process has a rank ($0$ to $n-1$)  
+  \item Message target a (rank, tag)-pair (tags are like ports)
+  \item Example: Send/receive a buffer to (rank, tag)
+    \begin{lstlisting}
+MPI_Send(buf, BUFSIZE, MPI_CHAR, rank, tag, MPI_COMM_WORLD);
+MPI_Recv(buf, BUFSIZE, MPI_CHAR, rank, tag, MPI_COMM_WORLD, &stat);
+    \end{lstlisting}
+  \item \texttt{boost} provides a C++ frontend and serialization
+    \begin{lstlisting}
+send(rank, tag, value);      
+recv(rank, tag, &value);
+    \end{lstlisting}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{mpi$^2$}
+  \begin{itemize}
+  \item Message Passing Interface $\times$ Max-Planck-Institut
+  \item Library built on top of MPI and \texttt{boost}
+  \item Goals
+    \begin{itemize}
+    \item Leverage aggregate memory
+    \item Leverage aggregate computational power
+    \item Low communication overhead
+    \item Easy to use for system's programming
+    \item Provide common primitives
+    \item Support both synchronous and asynchronous algorithms
+    \end{itemize}
+  \item Non-goals
+    \begin{itemize}
+    \item Replace MapReduce
+    \end{itemize}
+  \item Features
+    \begin{itemize}
+    \item Thread management (both spawning and communication)
+    \item Shared variables (across both threads and ranks)
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]\frametitle{Main Concepts}
+  \begin{itemize}
+  \item Task
+    \begin{itemize}
+    \item A piece of code to run
+    \item More technically, a function that takes a Channel (and a certain info object)
+    \end{itemize}
+  \item Channel
+    \begin{itemize}
+    \item Point-to-point communication
+    \item Thread-to-thread, not rank-to-rank
+    \end{itemize}
+  \item TaskManager
+    \begin{itemize}
+    \item Spawns (groups of) tasks
+    \item Sets up communication channels
+    \end{itemize}
+  \item Env
+    \begin{itemize}
+    \item Manages data stored at each rank
+    \item Provides remote access
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}\frametitle{Summary}
+  \begin{itemize}
+  \item Use cases for mpi$^2$
+    \begin{itemize}
+    \item Distributed matrix factorization
+    \item Distributed probabilistic inference
+    \end{itemize}
+  \item mpi$^2$ users
+    \begin{itemize}
+    \item Use mpi$^2$
+    \item Test mpi$^2$
+    \item Provide feedback
+    \end{itemize}
+  \item mpi$^2$ developers
+    \begin{itemize}
+    \item Lots of open issues
+    \item Help to develop mpi$^2$
+    \end{itemize}
+  \end{itemize}  
+\end{frame}
+
+\end{document}
+
+
