@@ -46,7 +46,7 @@ all dependencies can be installed without administrator rights.
 5. Install ccache
    - Use a package from your distribution (ccache)   
 
-6a) To install to ~/local, run "./localinstall.sh" (most users do this, no root login required)
+6a) To install to ~/local, first "mkdir build" and run then "./localinstall.sh" (most users do this, no root login required)
 6b) To build, Cd to <mf-root>/build, then run
     - For optimized build (default; release with CPU-specific optimizations): cmake -DCMAKE_BUILD_TYPE=NativeRelease ../
     - For generic release (release without CPU-specific optimizations): cmake -DCMAKE_BUILD_TYPE=Release ../
