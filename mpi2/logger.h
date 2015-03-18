@@ -20,8 +20,8 @@
 #include <log4cxx/mdc.h>
 
 #include <mpi2/task.h>
-#include <rg/io.h>
-#include <rg/evaluation/timeval.h>
+#include <util/io.h>
+#include <util/evaluation/timeval.h>
 
 namespace mpi2 {
 

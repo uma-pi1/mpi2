@@ -20,7 +20,7 @@
 
 #include <boost/mpi/communicator.hpp>
 
-#include <rg/io.h>
+#include <util/io.h>
 
 #include <mpi2/env.h>
 #include <mpi2/task.h>

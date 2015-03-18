@@ -44,7 +44,7 @@
 #include <iostream>
 #include <vector>
 
-#include <rg/exception.h>
+#include <util/exception.h>
 
 
 namespace mpi2 {

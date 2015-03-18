@@ -21,7 +21,7 @@
 #include <iostream>
 #include <string>
 
-#include <rg/random.h>
+#include <util/random.h>
 
 #include <mpi2/mpi2.h>
 

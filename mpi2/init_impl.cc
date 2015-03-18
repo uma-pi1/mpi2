@@ -20,7 +20,7 @@
 #include <mpi2/logger.h>
 #include <mpi2/task-manager.h>
 
-#include <rg/io.h>
+#include <util/io.h>
 
 namespace mpi2 {
 

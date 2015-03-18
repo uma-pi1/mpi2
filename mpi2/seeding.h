@@ -22,7 +22,7 @@
 #ifndef MPI2_SEEDING_H
 #define MPI2_SEEDING_H
 
-#include <rg/random.h>
+#include <util/random.h>
 #include <mpi2/channel.h>
 
 namespace mpi2 {

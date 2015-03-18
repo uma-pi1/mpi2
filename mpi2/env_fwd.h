@@ -29,8 +29,8 @@
 #include <boost/thread.hpp>
 #include <boost/any.hpp>
 
-#include <rg/exception.h>
-#include <rg/io.h>
+#include <util/exception.h>
+#include <util/io.h>
 
 #include <mpi2/task.h>
 #include <mpi2/types.h>

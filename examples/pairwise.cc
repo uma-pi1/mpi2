@@ -27,8 +27,8 @@
 #include <boost/numeric/ublas/matrix.hpp>
 #include <boost/numeric/ublas/matrix_sparse.hpp>
 
-#include <rg/io.h>
-#include <rg/random.h>
+#include <util/io.h>
+#include <util/random.h>
 
 #include <mpi2/mpi2.h>
 

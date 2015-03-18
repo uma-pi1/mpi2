@@ -37,7 +37,7 @@
 
 #include <log4cxx/logger.h>
 
-#include <rg/exception.h>
+#include <util/exception.h>
 
 #include <mpi2/logger.h>
 #include <mpi2/task.h>

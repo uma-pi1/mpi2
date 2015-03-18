@@ -64,7 +64,7 @@ SET(CMAKE_CXX_COMPILER_ARG1 mpicxx)
 ##IF(NOT ${Boost_FOUND})
 	SET(BOOST_ROOT ~/local) # default ##########################
 	SET(Boost_NO_SYSTEM_PATHS TRUE) # needed with cmake on lenny to prevent it grabbing an old system version...
-	find_package(Boost COMPONENTS serialization mpi thread program_options regex filesystem chrono REQUIRED)
+	find_package(Boost  COMPONENTS serialization mpi thread program_options regex filesystem chrono REQUIRED)
 ##ENDIF(NOT ${Boost_FOUND})
 link_directories(${Boost_LIBRARY_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
@@ -78,7 +78,7 @@ SET(INCLUDE_INSTALL_DIR include)
 
 # go
 configure_file("${MPI2_SOURCE_DIR}/log4j.properties" "${CMAKE_CURRENT_BINARY_DIR}/")
-add_subdirectory(rg)
+add_subdirectory(util)
 add_subdirectory(mpi2)
 add_subdirectory(tools)
 add_subdirectory(examples)
