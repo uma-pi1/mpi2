@@ -7,7 +7,8 @@ all dependencies can be installed without administrator rights.
    Version 2.8.3 or higher is needed!
 
 2. Install mpich2 (>= 1.3.2p1).
-   a) Use a package from your distribution (mpich2 & libmpich2-dev)
+   a) Use a package from your distribution (mpich2 & libmpich2-dev; sometimes also
+      mpich & libmpich-dev)
    b) Download source code from http://www.mcs.anl.gov/research/projects/mpich2/
       and perform the following steps:
       - unpack to ~local/src/mpich2/ and cd to this directory
@@ -17,7 +18,8 @@ all dependencies can be installed without administrator rights.
       - add ~/local/bin to your path (to the front)
 
 3. Install a recent version of Boost (>= 1.47).
-   a) Use package "libboost-dev" from your Linux distribution, if recent enough.
+   a) Use package "libboost-dev" from your Linux distribution, if recent enough and
+      built against mpich2 (and not openmpi).
    b) Download source code from http://www.boost.org/ and perform the following
       steps:
       - unpack to ~/local/src/boost_1_44_0 and cd to this directory
@@ -27,7 +29,8 @@ all dependencies can be installed without administrator rights.
 			option.set exec-prefix : /home/<your-login>/local ;
 			option.set libdir : /home/<your-login>/local/lib ;
 			option.set includedir : /home/<your-login>/local/include ;
-      - edit tools/build/v2/user-config.jam and add the line
+      - edit tools/build/v2/user-config.jam (on newer versions: create tools/build/src/user-config.jam)
+        and add the line
       		using mpi ;
       - edit boost/mpi/config.hpp and uncomment the line
             #define BOOST_MPI_HOMOGENEOUS
