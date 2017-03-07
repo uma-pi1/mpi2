@@ -338,7 +338,7 @@ void eraseAll(const std::string& name) {
 
 // forward declaration (from register.h)
 template<typename IdentifiableTask>
-inline void registerTask(bool reregister = false);
+inline void registerTask(bool reregister);
 
 namespace detail {
 

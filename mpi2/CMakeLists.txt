@@ -37,7 +37,7 @@ set(libmpi2_all_HDRS
 add_library(mpi2 SHARED ${libmpi2_all_HDRS} ${libmpi2_SRCS}) 
 
 # link libraries
-target_link_libraries(mpi2 ${Boost_LIBRARIES} log4cxx)
+target_link_libraries(mpi2 ${Boost_LIBRARIES} log4cxx rg)
 
 # install library and main headers
 install(TARGETS mpi2 DESTINATION ${LIB_INSTALL_DIR})

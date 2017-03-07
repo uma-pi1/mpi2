@@ -172,7 +172,7 @@ void manageManipulator(std::ios_base::event event, std::ios_base& stream, int ha
 // ------------------------------------------------------------------------------------------------
 
 template<class T>
-int allocManipulator(const T& defaultValue = T()) {
+int allocManipulator(const T& defaultValue) {
 	int handle = std::ios::xalloc();
 	io::DefaultManipulatorValues<T>::set(handle, defaultValue);
 	return handle;
