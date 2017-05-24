@@ -69,6 +69,11 @@ std::basic_ostream<CharT, Traits>& operator<<(
 
 /** An mpi2 communication channel. A channel connects two endpoints; it provides facilities
  * to send or receive messages.
+ *
+ * For most data types, synchronous and asynchronous communication can be combined (e.g., synchronous sending but asynchronous receiving). This
+ * is not true for std:vectors, here the communication types have to match. Beware that methods such as sendAll use asynchonous communication
+ * internally. If a std::vector is sent with such a method, receive it using another asynchrnous method (irecv/economicRecv/recvAll/recvAsynch). To facilitate
+ * handling such cases, every method is documented with whether it uses synchronos or asynchronous communication.
  */
 class Channel {
 public:
@@ -104,7 +109,7 @@ public:
 		return *world_;
 	}
 
-	/** Receives a message without any data from the other endpoint.
+	/** Receives a message without any data from the other endpoint (uses synchronous communication).
 	 *
 	 * @see boost::mpi::recv(int, int)
 	 */
@@ -113,12 +118,13 @@ public:
 	}
 
 
+	/** (uses asynchronous communication) */
 	inline boost::mpi::status economicRecv(unsigned pollDelay) const {
 		boost::mpi::request req = world_->irecv(remote_.rank, local_.tag);
 		return economicWait(req, pollDelay);
 	}
 
-	/** Receives a value from the other endpoint.
+	/** Receives a value from the other endpoint (uses synchronous communication).
 	 *
 	 * @see boost::mpi::recv(int, int, T&)
 	 */
@@ -127,6 +133,17 @@ public:
 		return world_->recv(remote_.rank, local_.tag, value);
 	}
 
+	/** Receives a value from the other endpoint (uses asynchronous communication).
+	 *
+	 * @see boost::mpi::recv(int, int, T&)
+	 */
+	template<typename T>
+	inline boost::mpi::status recvAsynch(T& value) const {
+		boost::mpi::request req = irecv(value);
+		return req.wait();
+	}
+
+	/** (uses asynchronous communication) */
 	template<typename T>
 	inline boost::mpi::status economicRecv(T& value, unsigned pollDelay) const {
 		boost::mpi::request req = world_->irecv(remote_.rank, local_.tag, value);
@@ -163,7 +180,7 @@ public:
 		return world_->irecv(remote_.rank, local_.tag, value, n);
 	}
 
-	/** Sends a message without any data to the other endpoint.
+	/** Sends a message without any data to the other endpoint (uses synchronous communication).
 	 *
 	 * @see boost::mpi::send(int, int)
 	 */
@@ -171,12 +188,13 @@ public:
 		world_->send(remote_.rank, remote_.tag);
 	}
 
+	/** (uses asynchronous communication) */
 	inline void economicSend(unsigned pollDelay) const {
 		boost::mpi::request req = world_->isend(remote_.rank, remote_.tag);
 		economicWait(req, pollDelay);
 	}
 
-	/** Sends a value to the other endpoint.
+	/** Sends a value to the other endpoint (uses synchronous communication).
 	 *
 	 * @see boost::mpi::send(int, int, const T&)
 	 */
@@ -185,6 +203,7 @@ public:
 		world_->send(remote_.rank, remote_.tag, value);
 	}
 
+	/** Sends a value to the other endpoint (uses asynchronous communication). */
 	template<typename T>
 	inline void economicSend(const T& value, unsigned pollDelay) const {
 		boost::mpi::request req = world_->isend(remote_.rank, remote_.tag, value);
@@ -246,18 +265,21 @@ std::basic_ostream<CharT, Traits>& operator<<(
 	}
 }
 
-
 /** Send a message without value to all channels. Method uses asynchronous communication. */
 std::vector<boost::mpi::request> isendAll(const std::vector<Channel>& channels, bool ignoreInactive=true);
 
-/** Send a message without value to all channels. Method uses asynchronous communication. */
+/** Send a message without value to all channels. Method uses asynchronous communication.
+ */
 void sendAll(const std::vector<Channel>& channels, bool ignoreInactive=true);
 
 /** Send a value to all channels. Method uses asynchronous communication. */
 template<typename T>
 std::vector<boost::mpi::request> isendAll(const std::vector<Channel>& channels, const T& value, bool ignoreInactive=true);
 
-/** Send a value to all channels. Method uses asynchronous communication. */
+/** Send a value to all channels. Method uses asynchronous communication.
+ *
+* If a std::vector is sent, it needs to be received using asynchronous communication as well (irecv/recvAll/economicRecv, but not recv).
+*/
 template<typename T>
 void sendAll(const std::vector<Channel>& channels, const T& value, bool ignoreInactive=true);
 
@@ -267,6 +289,7 @@ std::vector<boost::mpi::request> irecvAll(const std::vector<Channel>& channels, 
 /** Receive a message without value from all channels. Method uses asynchronous communication. */
 void recvAll(const std::vector<Channel>& channels, bool ignoreInactive=true);
 
+/** (uses asynchronous communication) */
 void economicRecvAll(const std::vector<Channel>& channels, unsigned pollDelay, bool ignoreInactive=true);
 
 /** Receive a value from all channels. Method uses asynchronous communication. */
@@ -277,6 +300,7 @@ std::vector<boost::mpi::request> irecvAll(const std::vector<Channel>& channels, 
 template<typename T>
 void recvAll(const std::vector<Channel>& channels, std::vector<T>& values, bool ignoreInactive=true);
 
+/** (uses asynchronous communication) */
 template<typename T>
 void economicRecvAll(const std::vector<Channel>& channels, std::vector<T>& values, unsigned pollDelay, bool ignoreInactive=true);
 
