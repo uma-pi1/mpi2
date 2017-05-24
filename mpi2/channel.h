@@ -72,7 +72,7 @@ std::basic_ostream<CharT, Traits>& operator<<(
  *
  * For most data types, synchronous and asynchronous communication can be combined (e.g., synchronous sending but asynchronous receiving). This
  * is not true for std:vectors, here the communication types have to match. Beware that methods such as sendAll use asynchonous communication
- * internally. If a std::vector is sent with such a method, receive it using another asynchrnous method (irecv/economicRecv/recvAll/recvAsynch). To facilitate
+ * internally. If a std::vector is sent with such a method, receive it using another asynchrnous method (irecv/economicRecv/recvAll/recvAsync). To facilitate
  * handling such cases, every method is documented with whether it uses synchronos or asynchronous communication.
  */
 class Channel {
@@ -138,7 +138,7 @@ public:
 	 * @see boost::mpi::recv(int, int, T&)
 	 */
 	template<typename T>
-	inline boost::mpi::status recvAsynch(T& value) const {
+	inline boost::mpi::status recvAsync(T& value) const {
 		boost::mpi::request req = irecv(value);
 		return req.wait();
 	}
