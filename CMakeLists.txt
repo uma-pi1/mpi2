@@ -60,11 +60,11 @@ SET(CMAKE_CXX_COMPILER ccache)
 SET(CMAKE_CXX_COMPILER_ARG1 mpicxx)
 
 # search for boost library
-find_package(Boost 1.63 COMPONENTS serialization mpi thread)
+find_package(Boost 1.63 COMPONENTS serialization mpi thread system filesystem)
 IF(NOT ${Boost_FOUND})
   SET(BOOST_ROOT ~/local) # default
   SET(Boost_NO_SYSTEM_PATHS ON) # force to use own build
-  find_package(Boost 1.63 COMPONENTS serialization mpi thread REQUIRED)
+  find_package(Boost 1.63 COMPONENTS serialization mpi thread  system filesystem REQUIRED)
 ENDIF(NOT ${Boost_FOUND})
 link_directories(${Boost_LIBRARY_DIRS})
 include_directories(${Boost_INCLUDE_DIRS})
